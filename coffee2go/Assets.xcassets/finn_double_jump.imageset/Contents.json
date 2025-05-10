@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Double Jump (32x32).png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
