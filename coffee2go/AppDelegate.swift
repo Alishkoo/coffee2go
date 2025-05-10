@@ -7,6 +7,9 @@
 
 import UIKit
 import SwiftUI
+import CoreMotion
+import YandexMapsMobile
+import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,12 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        YMKMapKit.setApiKey("c4930dc7-de40-4090-b602-bf2874634844")
+        YMKMapKit.sharedInstance()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
                 
         
         // Устанавливаем его как корневой
-        window?.rootViewController = UIHostingController(rootView: MainView())
+        //из заметок пока то что для карты нужна навконтроллер
+        window?.rootViewController = UINavigationController(rootViewController: MapViewController())
         window?.makeKeyAndVisible()
+        
         
         return true
       

@@ -1,0 +1,15 @@
+{
+  "originHash" : "502eb10d73a6b926313b03e2f5ee600740279bf167d417dbf65e8f7471592af8",
+  "pins" : [
+    {
+      "identity" : "yandexmapsmobile",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/c-villain/YandexMapsMobile",
+      "state" : {
+        "revision" : "f12b3fa718f67aa71577d609d670b288885f1e9b",
+        "version" : "4.14.0"
+      }
+    }
+  ],
+  "version" : 3
+}

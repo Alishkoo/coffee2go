@@ -6,5 +6,7 @@
 	<array>
 		<string>minecraft.ttf</string>
 	</array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Приложению требуется доступ к геолокации для показа вашей позиции на карте</string>
 </dict>
 </plist>
