@@ -76,15 +76,14 @@ class MapObjectTapListener: NSObject, YMKMapObjectTapListener {
             message += "Undefined type"
         }
 
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-
-        controller?.present(alert, animated: true)
+        if case let .business(name, workingHours, _, _, _) = type {
+            let bottomSheet = OrderNowBottomSheetViewController(
+                name: name,
+                address: description,
+                workingHours: workingHours
+            )
+            controller?.present(bottomSheet, animated: true)
+        }
 
         return true
     }
