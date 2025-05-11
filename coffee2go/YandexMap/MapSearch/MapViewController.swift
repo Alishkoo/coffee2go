@@ -25,11 +25,15 @@ class MapViewController: UIViewController {
         
         searchViewModel.setupSubscriptions()
         
-        setupSearchController()
+//        setupSearchController()
+        
+        setupStateUpdates()
         
         moveToStartPoint()
         
         setupLocationManager()
+        
+        setupCoffeeSearchButton()
     }
     
     // MARK: - Private methods
@@ -101,6 +105,40 @@ class MapViewController: UIViewController {
         setupStateUpdates()
     }
     
+    private func setupCoffeeSearchButton() {
+        let coffeeButton = UIButton(type: .system)
+        coffeeButton.setTitle("Найти кофейни", for: .normal)
+        coffeeButton.backgroundColor = .white
+        coffeeButton.setTitleColor(.systemBlue, for: .normal)
+        coffeeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        coffeeButton.layer.cornerRadius = 16
+        coffeeButton.layer.shadowColor = UIColor.black.cgColor
+        coffeeButton.layer.shadowOpacity = 0.2
+        coffeeButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        coffeeButton.layer.shadowRadius = 4
+        
+        coffeeButton.addTarget(self, action: #selector(searchCoffeeShops), for: .touchUpInside)
+        
+        view.addSubview(coffeeButton)
+        
+        coffeeButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            coffeeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            coffeeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            coffeeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            coffeeButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    @objc private func searchCoffeeShops() {
+        let searchQuery = "Кофейня"
+        searchViewModel.setQueryText(with: searchQuery)
+        
+        searchBarController.searchBar.text = searchQuery
+        
+        searchViewModel.startSearch()
+    }
+    
     private func focusCamera(points: [YMKPoint], boundingBox: YMKBoundingBox) {
         if points.isEmpty {
             return
@@ -115,7 +153,16 @@ class MapViewController: UIViewController {
         )
         : map.cameraPosition(with: YMKGeometry(boundingBox: boundingBox))
         
-        map.move(with: position, animation: YMKAnimation(type: .smooth, duration: 0.5))
+        // Ограничиваем минимальный зум (чем больше число, тем ближе камера)
+        let minZoom: Float = 5.0
+        let finalPosition = YMKCameraPosition(
+            target: position.target,
+            zoom: max(position.zoom, minZoom),
+            azimuth: position.azimuth,
+            tilt: position.tilt
+        )
+        
+        map.move(with: finalPosition, animation: YMKAnimation(type: .smooth, duration: 0.5))
     }
     
     private func displaySearchResults(
@@ -125,16 +172,74 @@ class MapViewController: UIViewController {
     ) {
         map.mapObjects.clear()
         
-        items.forEach { item in
-            let image = UIImage(systemName: "circle.circle.fill")!
-                .withTintColor(view.tintColor)
+        if let location = locationManager.userLocation {
+            updateUserLocation(location: location)
             
-            let placemark = map.mapObjects.addPlacemark()
-            placemark.geometry = item.point
-            placemark.setViewWithView(YRTViewProvider(uiView: UIImageView(image: image)))
+            // Определяем максимальный радиус поиска (в метрах)
+            let searchRadius: Double = 3000
             
-            placemark.userData = item.geoObject
-            placemark.addTapListener(with: mapObjectTapListener)
+            let userLocation = CLLocation(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+            
+            // Фильтруем результаты по расстоянию
+            let filteredItems = items.filter { item in
+                let itemLocation = CLLocation(
+                    latitude: item.point.latitude,
+                    longitude: item.point.longitude
+                )
+                
+                // Проверяем, находится ли точка в нашем радиусе
+                let distance = userLocation.distance(from: itemLocation)
+                return distance <= searchRadius
+            }
+            
+            // Сортируем отфильтрованные результаты по расстоянию
+            let sortedItems = filteredItems.sorted { (item1, item2) -> Bool in
+                let location1 = CLLocation(
+                    latitude: item1.point.latitude,
+                    longitude: item1.point.longitude
+                )
+                
+                let location2 = CLLocation(
+                    latitude: item2.point.latitude,
+                    longitude: item2.point.longitude
+                )
+                
+                return userLocation.distance(from: location1) < userLocation.distance(from: location2)
+            }
+            
+            
+            // Используем отфильтрованные и сортированные элементы
+            sortedItems.forEach { item in
+                let rawImage = UIImage(named: "coffee_icon")!
+                let image = circularImage(from: rawImage, diameter: 30)
+                
+                let placemark = map.mapObjects.addPlacemark()
+                placemark.geometry = item.point
+                placemark.setViewWithView(YRTViewProvider(uiView: UIImageView(image: image)))
+                
+                placemark.userData = item.geoObject
+                placemark.addTapListener(with: mapObjectTapListener)
+            }
+          
+//            if zoomToItems && !sortedItems.isEmpty {
+//                focusCamera(points: sortedItems.map { $0.point }, boundingBox: itemsBoundingBox)
+//            }
+        } else {
+            // Если местоположение недоступно, отображаем результаты как обычно
+            items.forEach { item in
+                let RawImage = UIImage(named: "coffee_icon")!
+                let image = circularImage(from: RawImage, diameter: 60)
+                
+                let placemark = map.mapObjects.addPlacemark()
+                placemark.geometry = item.point
+                placemark.setViewWithView(YRTViewProvider(uiView: UIImageView(image: image)))
+                
+                placemark.userData = item.geoObject
+                placemark.addTapListener(with: mapObjectTapListener)
+            }
         }
     }
     
@@ -229,7 +334,6 @@ class MapViewController: UIViewController {
         
         do {
             map.setMapStyleWithStyle(customMapStyle)
-            print("Кастомный стиль карты применен успешно")
         } catch {
             print("Ошибка применения стиля карты: \(error.localizedDescription)")
         }
@@ -311,6 +415,17 @@ extension MapViewController: UISearchResultsUpdating, UISearchControllerDelegate
             }
         }
         .store(in: &bag)
+    }
+    
+    func circularImage(from image: UIImage, diameter: CGFloat) -> UIImage {
+        let size = CGSize(width: diameter, height: diameter)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        
+        return renderer.image { context in
+            let rect = CGRect(origin: .zero, size: size)
+            UIBezierPath(ovalIn: rect).addClip()
+            image.draw(in: rect)
+        }
     }
     
     private func updateSuggests(with suggestState: SuggestState) {
