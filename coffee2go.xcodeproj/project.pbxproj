@@ -399,9 +399,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3383BZV24G;
+				DEVELOPMENT_TEAM = MWB82S6DN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coffee2go/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Приложению требуется доступ к геолокации для показа вашей позиции на карте";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -424,7 +425,7 @@
 					"-framework",
 					SystemConfiguration,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaisholanov.coffee2go;
+				PRODUCT_BUNDLE_IDENTIFIER = atabaynurken.coffee2go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -439,9 +440,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3383BZV24G;
+				DEVELOPMENT_TEAM = MWB82S6DN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coffee2go/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Приложению требуется доступ к геолокации для показа вашей позиции на карте";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -464,7 +466,7 @@
 					"-framework",
 					SystemConfiguration,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaisholanov.coffee2go;
+				PRODUCT_BUNDLE_IDENTIFIER = atabaynurken.coffee2go;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
