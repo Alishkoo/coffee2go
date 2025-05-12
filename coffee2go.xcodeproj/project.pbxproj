@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12400B0C2DD201E60082C398 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 12400B0B2DD201E60082C398 /* FirebaseAppCheck */; };
+		12400B0E2DD201E60082C398 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 12400B0D2DD201E60082C398 /* FirebaseAuth */; };
+		12400B102DD201E60082C398 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 12400B0F2DD201E60082C398 /* FirebaseAuthCombine-Community */; };
+		12400B122DD201E60082C398 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 12400B112DD201E60082C398 /* FirebaseCore */; };
 		129E3B1B2DCF92F100805AF3 /* YandexMapsMobile in Frameworks */ = {isa = PBXBuildFile; productRef = 129E3B1A2DCF92F100805AF3 /* YandexMapsMobile */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +63,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12400B0C2DD201E60082C398 /* FirebaseAppCheck in Frameworks */,
+				12400B122DD201E60082C398 /* FirebaseCore in Frameworks */,
+				12400B0E2DD201E60082C398 /* FirebaseAuth in Frameworks */,
 				129E3B1B2DCF92F100805AF3 /* YandexMapsMobile in Frameworks */,
+				12400B102DD201E60082C398 /* FirebaseAuthCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +127,10 @@
 			name = coffee2go;
 			packageProductDependencies = (
 				129E3B1A2DCF92F100805AF3 /* YandexMapsMobile */,
+				12400B0B2DD201E60082C398 /* FirebaseAppCheck */,
+				12400B0D2DD201E60082C398 /* FirebaseAuth */,
+				12400B0F2DD201E60082C398 /* FirebaseAuthCombine-Community */,
+				12400B112DD201E60082C398 /* FirebaseCore */,
 			);
 			productName = FourElements;
 			productReference = 129E3AA82DCF893A00805AF3 /* coffee2go.app */;
@@ -198,6 +210,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				129E3B192DCF92F100805AF3 /* XCRemoteSwiftPackageReference "YandexMapsMobile" */,
+				12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1218653A2D91831C00DE1736;
@@ -586,6 +599,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
 		129E3B192DCF92F100805AF3 /* XCRemoteSwiftPackageReference "YandexMapsMobile" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/c-villain/YandexMapsMobile";
@@ -597,6 +618,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		12400B0B2DD201E60082C398 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		12400B0D2DD201E60082C398 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		12400B0F2DD201E60082C398 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		12400B112DD201E60082C398 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12400B0A2DD201E60082C398 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
 		129E3B1A2DCF92F100805AF3 /* YandexMapsMobile */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 129E3B192DCF92F100805AF3 /* XCRemoteSwiftPackageReference "YandexMapsMobile" */;
