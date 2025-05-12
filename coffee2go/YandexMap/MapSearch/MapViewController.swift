@@ -58,10 +58,11 @@ class MapViewController: UIViewController {
         if let userPlacemark = userPlacemark, userPlacemark.isValid {
             userPlacemark.geometry = userPoint
         } else {
+            let rawImage = UIImage(named: "person_icon")!
+            let image = circularImage(from: rawImage, diameter: 30)
             // Создаем новый маркер для пользователя
             let placemark = map.mapObjects.addPlacemark(with: userPoint)
-            placemark.setIconWith(UIImage(systemName: "circle.circle.fill")!
-                .withTintColor(view.tintColor)) // Устанавливаем иконку
+            placemark.setIconWith(image)
             placemark.isDraggable = false
             userPlacemark = placemark
         }
@@ -107,9 +108,11 @@ class MapViewController: UIViewController {
     
     private func setupCoffeeSearchButton() {
         let coffeeButton = UIButton(type: .system)
-        coffeeButton.setTitle("Найти кофейни", for: .normal)
-        coffeeButton.backgroundColor = .white
-        coffeeButton.setTitleColor(.systemBlue, for: .normal)
+        coffeeButton.setTitle("Кофейни рядом", for: .normal)
+        
+        coffeeButton.backgroundColor = UIColor(red: 0.33, green: 0.2, blue: 0.08, alpha: 1.0)
+        coffeeButton.setTitleColor(.white, for: .normal)
+        
         coffeeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         coffeeButton.layer.cornerRadius = 16
         coffeeButton.layer.shadowColor = UIColor.black.cgColor
@@ -154,7 +157,7 @@ class MapViewController: UIViewController {
         : map.cameraPosition(with: YMKGeometry(boundingBox: boundingBox))
         
         // Ограничиваем минимальный зум (чем больше число, тем ближе камера)
-        let minZoom: Float = 5.0
+        let minZoom: Float = 13.5
         let finalPosition = YMKCameraPosition(
             target: position.target,
             zoom: max(position.zoom, minZoom),
