@@ -11,11 +11,13 @@ class OrderNowBottomSheetViewController: UIViewController {
     private let name: String
     private let address: String
     private let workingHours: String?
+    private let router: AppRouter
 
-    init(name: String, address: String, workingHours: String?) {
+    init(name: String, address: String, workingHours: String?, router: AppRouter) {
         self.name = name
         self.address = address
         self.workingHours = workingHours
+        self.router = router
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .pageSheet
         if let sheet = sheetPresentationController {
@@ -36,6 +38,12 @@ class OrderNowBottomSheetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    
+    @objc private func orderButtonTapped() {
+        dismiss(animated: true) {
+            self.router.navigateTo(.coffeeDetail, backButtonMode: .show)
+        }
     }
 
     private func setupUI() {
@@ -85,6 +93,7 @@ class OrderNowBottomSheetViewController: UIViewController {
         orderButton.layer.cornerRadius = 25
         orderButton.titleLabel?.font = .boldSystemFont(ofSize: 22)
         orderButton.translatesAutoresizingMaskIntoConstraints = false
+        orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
 
         view.addSubview(infoStack)
         view.addSubview(orderButton)

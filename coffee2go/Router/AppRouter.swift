@@ -20,7 +20,7 @@ enum BackButtonMode {
 enum AppScreen {
     case main
     case map
-    case coffeeDetails(coffeeShop: YMKGeoObject)
+    case coffeeDetail
     case game
     case settings
     case login
@@ -89,14 +89,10 @@ class AppRouter: ObservableObject {
             
         case .map:
             viewController = MapViewController()
-            
-        case .coffeeDetails(let coffeeShop):
-            viewController = OrderNowBottomSheetViewController(
-                name: coffeeShop.name ?? "Неизвестная кофейня",
-                address: coffeeShop.descriptionText ?? "Адрес недоступен",
-                workingHours: (coffeeShop.metadataContainer.getItemOf(YMKSearchBusinessObjectMetadata.self) as? YMKSearchBusinessObjectMetadata)?.workingHours?.text
-            )
-            viewController.title = coffeeShop.name ?? "Кофейня"
+        
+        case .coffeeDetail:
+            let coffeeDetailView = CoffeeView()
+            viewController = UIHostingController(rootView: coffeeDetailView.environmentObject(self))
             navigationController.isNavigationBarHidden = false
             
         case .login:
@@ -176,21 +172,9 @@ class AppRouter: ObservableObject {
         case .map:
             viewController = MapViewController()
             
-        case .coffeeDetails(let coffeeShop):
-            viewController = OrderNowBottomSheetViewController(
-                name: coffeeShop.name ?? "Неизвестная кофейня",
-                address: coffeeShop.descriptionText ?? "Адрес недоступен",
-                workingHours: (coffeeShop.metadataContainer.getItemOf(YMKSearchBusinessObjectMetadata.self) as? YMKSearchBusinessObjectMetadata)?.workingHours?.text
-            )
-            if let sheet = viewController.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom(resolver: { _ in return 350 })]
-                } else {
-                    sheet.detents = [.medium()]
-                }
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 30
-            }
+        case .coffeeDetail:
+            let coffeeDetailView = CoffeeView()
+            viewController = UIHostingController(rootView: coffeeDetailView.environmentObject(self))
             
         case .game:
             let gameVC = GameViewController()

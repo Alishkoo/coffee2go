@@ -9,8 +9,9 @@ import YandexMapsMobile
 class MapObjectTapListener: NSObject, YMKMapObjectTapListener {
     // MARK: - Constructor
 
-    init(controller: UIViewController) {
+    init(controller: UIViewController, router: AppRouter) {
         self.controller = controller
+        self.router = router
     }
     // MARK: - Public methods
 
@@ -80,7 +81,8 @@ class MapObjectTapListener: NSObject, YMKMapObjectTapListener {
             let bottomSheet = OrderNowBottomSheetViewController(
                 name: name,
                 address: description,
-                workingHours: workingHours
+                workingHours: workingHours,
+                router: router 
             )
             controller?.present(bottomSheet, animated: true)
         }
@@ -91,6 +93,7 @@ class MapObjectTapListener: NSObject, YMKMapObjectTapListener {
     // MARK: - Private properties
 
     private weak var controller: UIViewController?
+    private let router: AppRouter
 
     // MARK: - Private nesting
 

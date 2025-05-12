@@ -178,7 +178,6 @@ class MapViewController: UIViewController {
         if let location = locationManager.userLocation {
             updateUserLocation(location: location)
             
-            // Определяем максимальный радиус поиска (в метрах)
             let searchRadius: Double = 3000
             
             let userLocation = CLLocation(
@@ -365,7 +364,7 @@ class MapViewController: UIViewController {
     // searchSuggests: Это массив предложений для автозаполнения поиска.
     @Published private var searchSuggests: [SuggestItem] = []
     // mapObjectTapListener: Это объект, который обрабатывает нажатия на объекты карты.
-    private lazy var mapObjectTapListener = MapObjectTapListener(controller: self)
+    private lazy var mapObjectTapListener = MapObjectTapListener(controller: self, router: AppRouter.shared)
     
     // MARK: - Private nesting
     
