@@ -9,10 +9,15 @@ import Foundation
 import SwiftUI
 
 final class OrderViewModel: ObservableObject {
+    static let shared = OrderViewModel()
+    
     @Published var orders: [CoffeeOrder] = []
     @Published var recommendations: [CoffeeOrder] = [
-        CoffeeOrder(name: "Cappuccino", size: .medium, price: 1300, imageName: "cup.and.saucer.fill"),
-        CoffeeOrder(name: "Americano", size: .large, price: 1500, imageName: "cup.and.saucer.fill")
+        CoffeeOrder(name: "Сappuccino", size: .medium, price: 1300, imageName: "cappuccino"),
+        CoffeeOrder(name: "Frapuccino", size: .medium, price: 1500, imageName: "frappuccino"),
+        CoffeeOrder(name: "Matcha Chai", size: .medium, price: 1200, imageName: "matcha"),
+        CoffeeOrder(name: "Hot Chocolate", size: .medium, price: 1200, imageName: "hotchoco"),
+        CoffeeOrder(name: "Raf", size: .medium, price: 1300, imageName: "raf")
     ]
 
     var total: Int {

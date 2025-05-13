@@ -20,11 +20,15 @@ enum BackButtonMode {
 enum AppScreen {
     case main
     case map
-    case coffeeDetail
+    case coffeeDetail(coffee: CoffeeDetailModel)
+    case order
+    case coffeeMenu
     case game
     case settings
     case login
     case register
+    case preparingOrder
+    case orderComplete
 }
 
 class AppRouter: ObservableObject {
@@ -89,11 +93,43 @@ class AppRouter: ObservableObject {
             
         case .map:
             viewController = MapViewController()
+            
+        case .coffeeMenu:
+                let coffeeMenuView = CoffeeMenuView()
+                viewController = UIHostingController(rootView: coffeeMenuView.environmentObject(self))
+                navigationController.isNavigationBarHidden = false
         
-        case .coffeeDetail:
-            let coffeeDetailView = CoffeeView()
-            viewController = UIHostingController(rootView: coffeeDetailView.environmentObject(self))
-            navigationController.isNavigationBarHidden = false
+        case .coffeeDetail(let coffee):
+                let coffeeViewModel = CoffeeDetailViewModel(coffee: coffee)
+                
+                let coffeeDetailView = CoffeeView(viewModel: coffeeViewModel)
+                    .environmentObject(self)
+                
+                let hostController = UIHostingController(rootView: coffeeDetailView)
+                
+                viewController = hostController
+                navigationController.isNavigationBarHidden = false
+            
+        case .order:
+                let orderView = OrderView()
+                    .environmentObject(self)
+                
+                viewController = UIHostingController(rootView: orderView)
+                navigationController.isNavigationBarHidden = false
+            
+        case .orderComplete:
+            let orderCompleteView = OrderCompleteView()
+                .environmentObject(self)
+            
+            viewController = UIHostingController(rootView: orderCompleteView)
+            
+            
+        case .preparingOrder:
+            let preparingOrderView = PreparingOrderView()
+                .environmentObject(self)
+            
+            viewController = UIHostingController(rootView: preparingOrderView)
+            navigationController.isNavigationBarHidden = true
             
         case .login:
             let loginView = LoginView()
@@ -171,6 +207,31 @@ class AppRouter: ObservableObject {
             
         case .map:
             viewController = MapViewController()
+            
+        case .coffeeMenu:
+                let coffeeMenuView = CoffeeMenuView()
+                viewController = UIHostingController(rootView: coffeeMenuView.environmentObject(self))
+                navigationController.isNavigationBarHidden = false
+            
+        case .order:
+                let orderView = OrderView()
+                    .environmentObject(self)
+                
+                viewController = UIHostingController(rootView: orderView)
+                navigationController.isNavigationBarHidden = false
+            
+        case .preparingOrder:
+            let preparingOrderView = PreparingOrderView()
+                .environmentObject(self)
+            
+            viewController = UIHostingController(rootView: preparingOrderView)
+            navigationController.isNavigationBarHidden = true
+            
+        case .orderComplete:
+            let orderCompleteView = OrderCompleteView()
+                .environmentObject(self)
+            
+            viewController = UIHostingController(rootView: orderCompleteView)
             
         case .coffeeDetail:
             let coffeeDetailView = CoffeeView()
