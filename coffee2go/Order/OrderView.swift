@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct OrderView: View {
-    @StateObject private var viewModel = OrderViewModel()
+    @StateObject private var viewModel = OrderViewModel.shared
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
         VStack(spacing: 20) {
@@ -28,7 +29,7 @@ struct OrderView: View {
 
                             VStack(alignment: .leading) {
                                 Text("\(order.name) (\(order.size.rawValue))")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "#21150F"))
                                 Text("\(order.price * order.quantity) ₸")
                                     .foregroundColor(.gray)
                             }
@@ -40,17 +41,17 @@ struct OrderView: View {
                                     viewModel.decreaseQuantity(of: order)
                                 }) {
                                     Image(systemName: "minus.circle.fill")
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(Color(hex: "#21150F"))
                                 }
 
                                 Text("\(order.quantity)")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "#21150F"))
 
                                 Button(action: {
                                     viewModel.increaseQuantity(of: order)
                                 }) {
                                     Image(systemName: "plus.circle.fill")
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(Color(hex: "#21150F"))
                                 }
                             }
 
@@ -62,7 +63,7 @@ struct OrderView: View {
                             }
                         }
                         .padding()
-                        .background(Color(hex: "#1E140F"))
+                        .background(Color(hex: "#EFE4D7"))
                         .cornerRadius(12)
                         .padding(.horizontal)
                     }
@@ -79,17 +80,17 @@ struct OrderView: View {
                                     viewModel.addToOrder(rec)
                                 }) {
                                     VStack(spacing: 8) {
-                                        Image(systemName: rec.imageName)
+                                        Image(rec.imageName)
                                             .resizable()
                                             .frame(width: 40, height: 40)
                                             .foregroundColor(.white)
                                         Text(rec.name)
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color(hex: "#21150F"))
                                         Text("\(rec.price) ₸")
                                             .foregroundColor(.gray)
                                     }
                                     .padding()
-                                    .background(Color(hex: "#3C2F26"))
+                                    .background(Color(hex: "#EFE4D7"))
                                     .cornerRadius(16)
                                 }
                             }
@@ -112,7 +113,7 @@ struct OrderView: View {
                 .padding(.horizontal)
 
                 Button(action: {
-                    // Payment logic
+                    router.navigateTo(.preparingOrder, backButtonMode: .hide)
                 }) {
                     Text("Pay with Kaspi")
                         .foregroundColor(.white)
@@ -126,7 +127,7 @@ struct OrderView: View {
             }
             .padding(.bottom)
         }
-        .background(Color(hex: "#0E0704").ignoresSafeArea())
+        .background(Color(hex: "#412A1D").ignoresSafeArea())
     }
 }
 

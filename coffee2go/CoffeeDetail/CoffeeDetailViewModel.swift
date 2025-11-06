@@ -8,12 +8,16 @@
 import Foundation
 
 class CoffeeDetailViewModel: ObservableObject {
-    @Published var coffee = CoffeeDetailModel(
-        name: "Latte",
-        basePrice: 1200,
-        selectedSize: .small
-    )
-
+    @Published var coffee : CoffeeDetailModel
+    
+    init(coffee: CoffeeDetailModel? = nil) {
+        self.coffee = coffee ?? CoffeeDetailModel(
+            name: "Latte",
+            basePrice: 1200,
+            selectedSize: .medium
+        )
+    }
+    
     let availableSyrups = [
         AddOn(name: "Vanilla", price: 100, iconName: "Vanilla"),
         AddOn(name: "Caramel", price: 100, iconName: "Caramel"),

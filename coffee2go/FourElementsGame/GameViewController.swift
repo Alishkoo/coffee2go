@@ -32,6 +32,20 @@ class GameViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent {
+            navigationController?.delegate?.navigationController?(navigationController!,
+                                                                  willShow: UIViewController(),
+                                                                  animated: false)
+            
+            DispatchQueue.main.async {
+                AppRouter.shared.navigateTo(.orderComplete, backButtonMode: .hide)
+            }
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

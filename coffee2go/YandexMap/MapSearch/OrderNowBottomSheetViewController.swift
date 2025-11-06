@@ -42,7 +42,7 @@ class OrderNowBottomSheetViewController: UIViewController {
     
     @objc private func orderButtonTapped() {
         dismiss(animated: true) {
-            self.router.navigateTo(.coffeeDetail, backButtonMode: .show)
+            self.router.navigateTo(.coffeeMenu, backButtonMode: .show)
         }
     }
 
